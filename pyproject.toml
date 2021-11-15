@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "report.py"
+version = "0.1.0"
+description = "A git log reporting tool"
+authors = ["antoniouaa <antoniouaa@hotmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+rich = "^10.13.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
