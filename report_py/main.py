@@ -1,4 +1,5 @@
 import re
+import shlex
 import pathlib
 import subprocess
 from collections import defaultdict
@@ -28,12 +29,8 @@ def parse_log(log: list[str]) -> dict[str, list[str]]:
 
 def get_git_log(args) -> list[str]:
     commits = subprocess.run(
-        [
-            "git",
-            "log",
-            "--oneline",
-            "--since '1 week ago'",
-        ],
+        shlex.split('git log --oneline --since "1 week ago"'),
+        shell=True,
         capture_output=True,
     ).stdout
     commits = commits.decode("utf-8").splitlines()
