@@ -40,8 +40,8 @@ def get_git_log(args) -> list[str]:
 def attach_to_tree(tree: Tree, mapping: dict[str, list[tuple[str, str]]]) -> None:
     for topic, messages in mapping.items():
         table = Table(title=topic)
-        table.add_column("Commit Hash", justify="left")
-        table.add_column("Message", justify="left")
+        table.add_column("Hash", justify="left", min_width=10)
+        table.add_column("Message", justify="left", min_width=90, max_width=90)
         for hash_, message in messages:
             table.add_row(hash_, message)
         tree.add(table, style=topic.lower())
@@ -49,15 +49,14 @@ def attach_to_tree(tree: Tree, mapping: dict[str, list[tuple[str, str]]]) -> Non
 
 def get_repo_name():
     name = subprocess.run(
-        [
-            "git",
-            "remote",
-            "get-url",
-            "origin",
-        ],
+        shlex.split("git remote get-url origin"),
+        shell=True,
         capture_output=True,
     ).stdout
-    return pathlib.Path(name.decode("utf-8")).name[:-5]
+    reponame = pathlib.Path(name.decode("utf-8")).name.strip()
+    if reponame.endswith(".git"):
+        return reponame[:-4]
+    return reponame
 
 
 def run() -> None:
