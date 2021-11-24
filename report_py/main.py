@@ -28,8 +28,9 @@ def parse_log(log: list[str]) -> dict[str, list[str]]:
 
 
 def get_git_log(args) -> list[str]:
+    since = args.since
     commits = subprocess.run(
-        shlex.split('git log --oneline --since "1 week ago"'),
+        shlex.split(f'git log --oneline --since="{since}"'),
         shell=True,
         capture_output=True,
     ).stdout
