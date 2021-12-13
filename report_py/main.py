@@ -40,7 +40,7 @@ def get_git_log(args) -> list[str]:
 
 def attach_to_tree(tree: Tree, mapping: dict[str, list[tuple[str, str]]]) -> None:
     for topic, messages in mapping.items():
-        table = Table(title=topic)
+        table = Table(title=f"{topic} - {len(messages)} commits")
         table.add_column("Hash", justify="left", min_width=10)
         table.add_column("Message", justify="left", min_width=90, max_width=90)
         for hash_, message in messages:
@@ -66,8 +66,8 @@ def run() -> None:
 
     repo_name = get_repo_name()
 
-    tree = Tree(f":seedling: {repo_name}", highlight=True)
     commits = get_git_log(args)
     topics = parse_log(commits)
+    tree = Tree(f":seedling: {repo_name} ({len(commits)} changes)", highlight=True)
     attach_to_tree(tree, topics)
     console.print(tree)
