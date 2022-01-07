@@ -8,6 +8,7 @@ theme = Theme(
         "tools": "#4c86ea",
         "vba": "#127c44",
         "docs": "#d5282d",
+        "iso": "#ab53d2",
     }
 )
 

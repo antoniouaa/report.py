@@ -2,6 +2,7 @@ import re
 import shlex
 import pathlib
 import subprocess
+from argparse import Namespace
 from collections import defaultdict
 
 from rich.tree import Tree
@@ -27,7 +28,7 @@ def parse_log(log: list[str]) -> dict[str, list[str]]:
     return topics
 
 
-def get_git_log(args) -> list[str]:
+def get_git_log(args: Namespace) -> list[str]:
     since = args.since
     commits = subprocess.run(
         shlex.split(f'git log --oneline --since="{since}"'),
